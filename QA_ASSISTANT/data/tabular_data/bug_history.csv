@@ -1,0 +1,9 @@
+bug_id,date,module,summary,root_cause,found_in,missing_test
+BUG-01,2024-11-04,conflicts,A booking ending at 11:00 blocked a booking starting at 11:00,End time treated as occupied,production,back-to-back bookings
+BUG-02,2024-11-18,cancellation,A member could cancel another member's booking,Ownership check missing on a new endpoint,production,cancel by a non-owner
+BUG-03,2024-12-02,bookings,Booking a room that does not exist returned a server error,Room lookup not guarded,review,unknown room
+BUG-04,2024-12-16,availability,Free windows came out of order when bookings were created in reverse order,Sorting missing,production,availability with several bookings
+BUG-05,2025-01-06,bookings,A booking ending at 20:00 refused as outside opening hours,Closing time compared with the wrong operator,production,end exactly at closing time
+BUG-06,2025-01-20,permissions,Listing bookings returned cancelled bookings by default,Status filter missing,production,list after cancellation
+BUG-07,2025-01-27,bookings,A booking starting on a non-30-minute time was accepted,Grid rule not enforced on end time,review,end time off the grid
+BUG-08,2025-02-03,bookings,A booking of 4 hours 30 minutes was accepted,Maximum duration not enforced,review,duration just above the maximum
