@@ -1,6 +1,6 @@
 # Catalogue de projets LLMOps
 
-Ce répertoire est le paquet apprenant du catalogue : il propose quatre contextes métier pour construire un projet d'AI Engineering. Il fournit le point de départ : une fiche projet et des données. La manière de concevoir la solution appartient à chaque équipe.
+Ce répertoire est le paquet apprenant du catalogue : il propose quatre contextes métier, plus un sujet bêta, pour construire un projet d'AI Engineering. Il fournit le point de départ : une fiche projet et des données. La manière de concevoir la solution appartient à chaque équipe.
 
 La progression, les livrables et les pratiques attendues sont décrits dans la [méthodologie unifiée AI Engineering](../AI_engineering_project_message/README.md).
 
@@ -10,6 +10,7 @@ La progression, les livrables et les pratiques attendues sont décrits dans la [
 - [Conformité Réglementaire](CONFORMITE_REGLEMENTAIRE/fiche_projet.md) — aider des auditeurs à analyser une situation au regard d'un cadre réglementaire.
 - [Parcours Apprenant](PARCOURS_APPRENANT/fiche_projet.md) — aider à construire des parcours de formation cohérents avec un profil et un objectif.
 - [LocalMind](LOCAL_MIND/fiche_projet.md) — produire des synthèses de documents sensibles dans un environnement local.
+- [Assistant QA (bêta)](ASSISTANT_QA/fiche_projet.md) — construire un assistant qui augmente la couverture de tests et la détection de défauts d'une vraie plateforme ML d'entraînement et de service.
 
 Pour votre sujet, commencez par lire la fiche, explorer les données et cartographier les workflows métier présentés. Ils décrivent le travail actuel et ses contraintes ; ils ne prescrivent pas une solution à construire.
 
@@ -21,6 +22,8 @@ Chaque dossier de projet contient une `fiche_projet.md` et un dossier `donnees/`
 - `donnees_tabulaire/` : registres, catalogues, historiques et autres données structurées ;
 - `jeux_evaluation/` : cas et références utilisables pour préparer un protocole d'évaluation ;
 - `exemples_prompts/` : exemples de formulations, présents uniquement pour LocalMind.
+
+L'Assistant QA s'appuie aussi sur un dépôt séparé, la plateforme testée, référencé dans sa fiche.
 
 Le choix des moyens de stockage, des accès, des transformations et de la démarche d'évaluation relève de l'équipe. Il doit être cohérent avec le cas d'usage retenu, les données, les risques et les contraintes métier.
 

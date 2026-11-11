@@ -1,0 +1,8 @@
+bug_id,date,module,summary,root_cause,found_in,missing_test
+BUG-01,2025-09-02,api,Les requêtes rejetées journalisaient tout le contenu y compris les zones de prise en charge,Le gestionnaire de validation journalisait le corps de la requête,revue de sécurité,contenu des logs d'une requête rejetée
+BUG-02,2025-09-15,api,Les premières requêtes après un redémarrage prenaient plusieurs secondes,Modèle chargé pendant la requête,production,requête sans modèle
+BUG-03,2025-09-29,pipeline,Une ingestion relancée doublait les lignes d'entraînement,Pas de clé d'idempotence sur la source,production,ingestion relancée deux fois
+BUG-04,2025-10-13,pipeline,L'alias champion bougeait avant le stockage de l'échantillon d'entraînement,Promotion faite avant l'enregistrement des artefacts,revue,ordre entre promotion et stockage des artefacts
+BUG-05,2025-10-20,pipeline,Des trajets avec un prix en texte faisaient planter toute l'ingestion,Valeurs non numériques non converties avant la validation,production,valeur non numérique dans une colonne numérique
+BUG-06,2025-10-27,api,Health renvoyait 200 juste après le démarrage alors que les prédictions échouaient en 503,Health ne vérifiait pas le modèle,production,health sans modèle
+BUG-07,2025-11-03,pipeline,Les limites de qualité des données différaient entre deux environnements,Limites codées en dur dans le flow,revue,limites lues dans la configuration

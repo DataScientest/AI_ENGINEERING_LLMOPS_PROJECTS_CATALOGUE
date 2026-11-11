@@ -1,0 +1,9 @@
+module,source_file,existing_tests,branch_coverage_v1_0
+prediction_api,services/prediction_api/app.py,tests/test_api.py (3 tests),60%
+pipeline_flow,services/pipeline/flow.py,tests/test_pipeline.py (1 test),40%
+pipeline_validation,services/pipeline/taxi_validation.py,indirects (via flow),67%
+pipeline_config,services/pipeline/pipeline_config.py,indirects (via flow),100%
+pipeline_bootstrap,services/pipeline/bootstrap.py,aucun,0%
+mlflow_init,services/mlflow/init_bucket.py,aucun,0%
+bout_en_bout,plateforme lancée,tests/test_integration.py (2 tests ; ignorés si la plateforme est arrêtée),non mesurée
+tous les services,services/,4 tests unitaires + 2 tests de bout en bout,43%

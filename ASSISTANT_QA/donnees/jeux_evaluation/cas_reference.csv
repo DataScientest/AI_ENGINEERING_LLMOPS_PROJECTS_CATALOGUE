@@ -1,0 +1,13 @@
+case_id,ticket_id,criterion_id,level,case_type,preconditions,action,expected_result
+REF-001,TX-101,AC-101-1,unitaire,limite,modèle chargé,POST /fare_predict avec pu_location_id = 265 (autres champs valides),200 avec predicted_fare
+REF-002,TX-101,AC-101-2,unitaire,limite,modèle chargé,POST /fare_predict avec pu_location_id = 266,"422 ; corps {detail: Invalid request, fields: [pu_location_id]}"
+REF-003,TX-101,AC-101-3,unitaire,nominal,modèle chargé,POST /fare_predict avec un objet JSON vide,200
+REF-004,TX-101,AC-101-4,unitaire,erreur,aucun modèle chargé,POST /fare_predict avec pickup_hour = 99,422 (la validation passe en premier)
+REF-005,TX-103,AC-103-1,unitaire,erreur,aucun modèle chargé,GET /health,"503 ; status unavailable, model_loaded false"
+REF-006,TX-103,AC-103-2,unitaire,erreur,modèle chargé mais predict lève une exception,GET /health,"503 ; model_loaded true, reason model cannot predict"
+REF-007,TX-106,AC-106-3,unitaire,limite,500 trajets bruts dont 100 avec passenger_count = -1,préparer les données,400 lignes valides renvoyées (exactement 20 % d'invalides est accepté)
+REF-008,TX-106,AC-106-3,unitaire,limite,500 trajets bruts dont 101 avec passenger_count = -1,préparer les données,ValueError (plus de 20 % d'invalides)
+REF-009,TX-107,AC-107-2,intégration,nominal,base SQLite vide ; même fichier source,ingérer deux fois le même mois,training_trips et quarantine_trips contiennent les lignes une seule fois
+REF-010,TX-108,AC-108-2,unitaire,limite,RMSE candidat 5.0 ; RMSE champion 5.0,décider la promotion,non promu (une égalité conserve le champion)
+REF-011,TX-104,AC-104-2,bout en bout,nominal,plateforme lancée ; une nouvelle version reçoit l'alias champion,attendre jusqu'à 60 s puis GET /health,model_version est la nouvelle version sans redémarrer l'API
+REF-012,TX-109,AC-109-1,aucun,ambigu,texte du ticket seul,concevoir des cas de test,"Aucun cas ne peut être écrit : « assez vite » n'a ni chiffre ni percentile. Attendu : demander une cible (par exemple p99 sous 1 s)"
