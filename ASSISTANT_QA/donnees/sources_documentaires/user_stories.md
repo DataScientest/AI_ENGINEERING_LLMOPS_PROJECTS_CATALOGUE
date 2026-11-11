@@ -1,0 +1,92 @@
+# User stories
+
+Tickets du backlog actuel. Les identifiants correspondent à `donnees/donnees_tabulaire/tickets.csv`. Les critères sont notés `AC-<ticket>-<n>`. Le comportement attendu derrière chaque critère est détaillé dans `docs/FUNCTIONAL_SPEC.md` du dépôt de la plateforme (section entre crochets).
+
+## TX-101 : Contrat d'entrée de la prédiction [§5.1, §5.2]
+
+En tant que client de l'API, je veux que les entrées invalides soient rejetées clairement pour pouvoir corriger ma requête.
+
+- AC-101-1 : Les valeurs aux bornes de chaque champ sont acceptées.
+- AC-101-2 : Une valeur hors bornes, ou du mauvais type, renvoie 422 et nomme les champs fautifs, triés.
+- AC-101-3 : Un corps vide est valide : chaque champ a une valeur par défaut.
+- AC-101-4 : Une requête invalide renvoie 422 même quand aucun modèle n'est chargé.
+- AC-101-5 : L'API accepte exactement les plages que la validation des données d'entraînement accepte.
+
+## TX-102 : Réponses de la prédiction [§5.2]
+
+En tant que client de l'API, je veux une réponse prévisible dans chaque situation.
+
+- AC-102-1 : Une requête valide renvoie le prix arrondi au centime et la version du modèle, calculé à partir des 9 variables du modèle.
+- AC-102-2 : Sans modèle, l'API renvoie 503 et ne charge jamais de modèle pendant la requête.
+- AC-102-3 : Une erreur levée par le modèle renvoie 500 sans exposer de détail interne.
+- AC-102-4 : Les logs nomment les champs fautifs d'une requête rejetée, jamais leurs valeurs.
+
+## TX-103 : Disponibilité [§5.3]
+
+En tant qu'opérateur, je veux que `/health` dise si le service peut réellement prédire.
+
+- AC-103-1 : Sans modèle, `/health` renvoie 503.
+- AC-103-2 : Avec un modèle qui ne sait pas prédire, `/health` renvoie 503.
+- AC-103-3 : Avec un modèle qui fonctionne, `/health` renvoie 200 avec la version et un prix de contrôle.
+
+## TX-104 : Servir le champion [§5.4]
+
+En tant que data scientist, je veux que l'API serve le dernier champion sans redémarrage.
+
+- AC-104-1 : Quand aucun champion n'existe, rien ne change et l'API continue de répondre 503.
+- AC-104-2 : Une nouvelle version du champion est chargée et sa version est indiquée.
+- AC-104-3 : La même version n'est pas chargée deux fois.
+
+## TX-105 : Préparation des données [§1]
+
+En tant que data engineer, je veux que les trajets bruts deviennent des variables propres.
+
+- AC-105-1 : Les colonnes source sont renommées et la sortie contient les 9 variables puis la cible, dans cet ordre.
+- AC-105-2 : Une colonne obligatoire manquante fait échouer la préparation en nommant chaque colonne manquante.
+- AC-105-3 : `pickup_weekday` vaut 1 du lundi au vendredi et 0 le week-end.
+- AC-105-4 : `total_fare` additionne les composantes facultatives, en comptant les absentes comme 0.
+
+## TX-106 : Validation et quarantaine [§2]
+
+En tant que data engineer, je veux que les mauvaises lignes soient mises de côté, jamais perdues, et qu'une source cassée arrête le pipeline.
+
+- AC-106-1 : Les lignes hors des plages valides sont mises en quarantaine avec une raison qui nomme la colonne.
+- AC-106-2 : Les valeurs manquantes, infinies et non numériques sont mises en quarantaine.
+- AC-106-3 : Plus de 20 % de lignes invalides fait échouer la préparation ; exactement 20 % passe.
+- AC-106-4 : Moins de 100 lignes valides fait échouer la préparation ; exactement 100 passe.
+- AC-106-5 : Les limites viennent du fichier de configuration, pas du code.
+
+## TX-107 : Ingestion [§3]
+
+En tant que data engineer, je veux qu'une ingestion puisse être relancée sans risque.
+
+- AC-107-1 : Un mois invalide ou une limite inférieure à 100 échoue avant tout téléchargement.
+- AC-107-2 : Ingérer deux fois la même source ne duplique ni les lignes valides, ni les lignes en quarantaine.
+- AC-107-3 : Les lignes en quarantaine sont stockées avec leur raison.
+
+## TX-108 : Entraînement et promotion [§4]
+
+En tant que data scientist, je veux qu'un nouveau modèle ne remplace le champion que s'il est meilleur.
+
+- AC-108-1 : Le candidat et le champion sont évalués sur les mêmes données de validation.
+- AC-108-2 : Le candidat n'est promu que s'il n'y a pas de champion ou si son erreur est strictement plus faible ; une égalité conserve le champion.
+- AC-108-3 : Chaque candidat est enregistré comme nouvelle version, promu ou non, avec ses métriques, ses paramètres et son échantillon d'entraînement.
+- AC-108-4 : L'alias champion ne bouge qu'après le stockage du modèle et de ses artefacts.
+
+## TX-109 : Une API assez rapide
+
+En tant que product owner, je veux que l'API soit assez rapide pour nos utilisateurs.
+
+- AC-109-1 : L'API répond assez vite.
+
+## TX-110 : Réentraîner quand les données changent
+
+En tant que product owner, je veux que le modèle soit réentraîné quand les données changent beaucoup.
+
+- AC-110-1 : Un changement important des données déclenche un réentraînement.
+
+## TX-111 : Un modèle plus précis
+
+En tant que product owner, je veux des prédictions plus précises.
+
+- AC-111-1 : Le modèle est plus précis qu'aujourd'hui.
