@@ -1,0 +1,13 @@
+case_id,ticket_id,criterion_id,level,case_type,preconditions,action,expected_result
+REF-001,TX-101,AC-101-1,unit,boundary,model loaded,POST /fare_predict with pu_location_id = 265 (other fields valid),200 with predicted_fare
+REF-002,TX-101,AC-101-2,unit,boundary,model loaded,POST /fare_predict with pu_location_id = 266,"422; body {detail: Invalid request, fields: [pu_location_id]}"
+REF-003,TX-101,AC-101-3,unit,nominal,model loaded,POST /fare_predict with an empty JSON object,200
+REF-004,TX-101,AC-101-4,unit,error,no model loaded,POST /fare_predict with pickup_hour = 99,422 (validation comes first)
+REF-005,TX-103,AC-103-1,unit,error,no model loaded,GET /health,"503; status unavailable, model_loaded false"
+REF-006,TX-103,AC-103-2,unit,error,model loaded but predict raises,GET /health,"503; model_loaded true, reason model cannot predict"
+REF-007,TX-106,AC-106-3,unit,boundary,500 raw trips of which 100 have passenger_count = -1,prepare the data,400 valid rows returned (exactly 20% invalid is accepted)
+REF-008,TX-106,AC-106-3,unit,boundary,500 raw trips of which 101 have passenger_count = -1,prepare the data,ValueError (more than 20% invalid)
+REF-009,TX-107,AC-107-2,integration,nominal,empty SQLite database; same source file,ingest the same month twice,training_trips and quarantine_trips hold the rows once
+REF-010,TX-108,AC-108-2,unit,boundary,candidate RMSE 5.0; champion RMSE 5.0,decide promotion,not promoted (a tie keeps the champion)
+REF-011,TX-104,AC-104-2,end-to-end,nominal,platform running; a new model version gets the champion alias,wait up to 60 s then GET /health,model_version is the new version without restarting the API
+REF-012,TX-109,AC-109-1,none,ambiguous,ticket text only,design test cases,"No case can be written: 'fast enough' has no number and no percentile. Expected: ask for a target (for example p99 under 1 s)"
