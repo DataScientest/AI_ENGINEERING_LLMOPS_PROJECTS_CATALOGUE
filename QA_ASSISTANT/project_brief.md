@@ -4,45 +4,78 @@
 
 ## Business context
 
-RoomBook is the internal meeting-room booking service of Hub42, a coworking operator. The team has seven people: six developers and one QA engineer. Since the developers started using AI assistants to write code, they deliver user stories about twice as fast, and the QA engineer, the only person who designs test cases and maintains the automated suite, has become the bottleneck. No additional QA hire is planned.
+TaxiFare predicts the fare of a New York taxi trip before it starts. The platform is real and runs locally: a prediction API, a training pipeline that validates data and detects drift, and a monitoring stack (metrics, logs, traces, alerts) of about fifteen containers.
 
-The project aims to help the QA engineer turn a user story into test cases faster, without replacing their judgement on what is tested and what is merged.
+The team has six developers and one QA engineer. Since the developers started using AI assistants to write code, they ship about twice as many changes. The QA engineer, the only person who designs tests, has become the bottleneck, and the test suite has fallen behind: 16% branch coverage, several modules without any test, incidents found in production rather than by the suite.
+
+The project aims to build an assistant that helps the QA engineer test the platform much better and much faster, at every level (unit, integration, end-to-end), without replacing their judgement on what is tested and what is merged.
 
 ## Users and stakes
 
-The primary user is the QA engineer. Developers and the team lead also read the test cases and the results.
+The primary user is the QA engineer. Developers read the generated tests and their results; the team lead follows coverage and incidents.
 
-The goals are to reduce the time spent designing test cases and to keep, or improve, the ability of the suite to catch defects. A test that passes without checking the requirement gives false confidence. A generated test that takes longer to review than to write by hand removes the benefit.
+The goal is a suite that catches defects, not a suite that only runs. A test that passes without checking the requirement gives false confidence. A generated test that takes longer to review than to write by hand removes the benefit. An end-to-end test that could have been a unit test makes the suite slow for nothing.
+
+## Ambition: a minimum, no ceiling
+
+The minimum below is what every team must deliver. It is a floor, not a target: teams are explicitly encouraged to go further, and the evaluation values what is achieved beyond it, as long as it is measured and controlled.
+
+**Minimum (MVP)**
+
+- An assistant takes one ticket and the specification, and proposes test cases linked to the acceptance criteria. When a criterion is unclear, it asks a question instead of inventing an answer.
+- The approved cases become automated unit tests for at least one module, reusing the existing fixtures.
+- A human reviews everything before it is merged.
+- You measure, against a baseline: the coverage gained on that module, the review time, and the cases that were wrong or invented.
+
+**Going further (examples, none is mandatory)**
+
+- Cover all tickets and every module, including those with no test today.
+- Generate integration tests with real dependencies (database, model registry, alert-rule tooling) started for the test.
+- Generate end-to-end tests on the full stack: traffic, metrics, alerts, notifications.
+- Choose the right level for each case (unit, integration, end-to-end) and justify it.
+- Measure the strength of your own tests (for example with mutation testing), not only their coverage.
+- Select the tests relevant to a change and run them in the CI, with a report on the pull request.
+- Let an agent explore the running platform to propose cases the specification does not mention, with strict limits on what it may do.
 
 ## Data provided
 
-The following datasets are provided. They are working sources; selecting them and deciding their role in your proposal is part of the scoping.
+The following sources are provided. Selecting them and deciding their role in your proposal is part of the scoping.
 
-- `data/source_documents/application_documentation.md`: functional documentation of RoomBook, with its business rules and error codes.
-- `data/source_documents/user_stories.md`: the current backlog, with acceptance criteria.
-- `data/source_documents/team_context.md`: the team, how a story moves today, and constraints.
-- `data/tabular_data/tickets.csv`: the same stories as tickets.
-- `data/tabular_data/bug_history.csv`: past defects, their cause and the test that was missing.
-- `data/tabular_data/module_test_map.csv`: which existing tests cover which module, and known gaps.
-- `data/application/`: the RoomBook service (Python) and its existing automated test suite, with shared fixtures. See `data/application/README.md`.
-- `data/evaluation_sets/reference_cases.csv`: reference test cases written by hand for some tickets, to build and run your evaluation.
+- **The platform** (system under test): repository [`DataScientest/AI_ENGINEERING_QA_ASSISTANT_TAXI_PLATFORM`](https://github.com/DataScientest/AI_ENGINEERING_QA_ASSISTANT_TAXI_PLATFORM), tag `v1.0`. Work on your own fork. It contains:
+  - the code of every service and the existing test suite (`tests/`);
+  - `docs/FUNCTIONAL_SPEC.md`: the expected behaviour, which is the reference for every expected result;
+  - `docs/RUNBOOKS.md`: what each alert means and what to do.
+- `data/source_documents/user_stories.md`: the backlog, with acceptance criteria and links to the specification.
+- `data/source_documents/team_context.md`: the team, how a change moves today, and constraints.
+- `data/tabular_data/tickets.csv`: the same tickets in tabular form.
+- `data/tabular_data/bug_history.csv`: past incidents, their cause and the test that was missing.
+- `data/tabular_data/module_test_map.csv`: modules, existing tests and their coverage at `v1.0`.
+- `data/evaluation_sets/reference_cases.csv`: reference test cases written by hand for some tickets, at several levels, to build and run your evaluation.
 
 ## Real-world constraints
 
-- Nothing generated is merged without human review.
-- The expected result of a test must come from the documented behaviour, not from running the application.
+- Nothing generated is merged without human review, and anything generated is identifiable as such and traceable to its ticket.
+- The expected result of a test comes from the specification, never from running the platform.
 - Tickets are written by several people and are not always precise.
-- The existing fixtures and helpers of the suite must be reused rather than duplicated.
-- Anything generated must be identifiable as such and traceable to the ticket it comes from.
+- The existing fixtures are reused rather than duplicated.
+- End-to-end tests are slow: they are kept for what lower levels cannot check.
+- Generated code runs in an isolated environment, without production secrets.
 
 ## Current business workflows
 
-### Design test cases for a new story
+### Design tests for a ticket
 
 **Trigger → actors → information consulted → decisions → actions → expected outcome**  
-Story ready for test → QA engineer, developer → story, acceptance criteria, functional documentation, existing tests → decide which cases are needed (normal, limit, error) and which criteria are unclear → write the cases and ask questions about unclear criteria → a set of cases the team agrees on, each linked to a criterion.
+Ticket ready for test → QA engineer, developer → ticket, acceptance criteria, specification, existing tests → decide which cases are needed (normal, limit, error), at which level, and which criteria are unclear → write and automate the cases, ask questions about unclear criteria → tests the team agrees on, each linked to a criterion.
 
-Observable friction and risks: imprecise tickets, forgotten limit cases, duplicates of existing tests, time spent before development can be merged.
+Observable friction and risks: imprecise tickets, forgotten limit cases, duplicates, tests at the wrong level, time spent before a change can be merged.
+
+### Close coverage gaps
+
+**Trigger → actors → information consulted → decisions → actions → expected outcome**  
+Coverage report or incident → QA engineer → coverage per module, incident history, specification → decide which untested behaviour matters most → add the missing tests → fewer incidents found in production.
+
+Observable friction and risks: coverage chased for its own sake, tests that execute code without checking anything.
 
 ### Decide what to run after a change
 
@@ -51,16 +84,9 @@ Pull request opened → developer, QA engineer → the change, the module map, t
 
 Observable friction and risks: the full suite is slow, a relevant test is skipped, a regression is missed.
 
-### Understand a failing test
-
-**Trigger → actors → information consulted → decisions → actions → expected outcome**  
-Test fails → QA engineer, developer → test, documentation, recent changes → decide whether it is a defect, a fragile test or a bad expectation → report to the right person → the failure is resolved or the test is fixed.
-
-Observable friction and risks: time lost on false failures, expectations copied from the behaviour instead of the specification.
-
 ## Your scoping
 
-Based on these elements, choose a priority objective and define an observable MVP. Which specific problem deserves to be addressed first, for which user, and why? Define a baseline, a success metric, and the sources that are actually useful. Specify the chosen level of automation, the risks, the guardrails, and the non-goals. Which decision must remain human? What evidence would lead you to conclude that the MVP genuinely helps without increasing risk?
+Based on these elements, choose a priority objective and define an observable MVP that meets at least the minimum above. Which specific problem deserves to be addressed first, for which user, and why? Define a baseline, a success metric, and the sources that are actually useful. Specify the chosen level of automation, the risks, the guardrails, and the non-goals. Which decision must remain human? What evidence would lead you to conclude that the assistant genuinely helps without increasing risk?
 
 Explicitly justify why a **simple LLM treatment (chat)**, a **Workflow**, a **RAG**, or an **Agent** is retained or ruled out for your scope — the simplest solution that proves the value is a legitimate choice. Your decision must be proportionate to the users, the risks, and the evidence you can produce.
 

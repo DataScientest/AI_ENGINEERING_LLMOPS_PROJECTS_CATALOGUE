@@ -1,9 +1,9 @@
 bug_id,date,module,summary,root_cause,found_in,missing_test
-BUG-01,2024-11-04,conflicts,A booking ending at 11:00 blocked a booking starting at 11:00,End time treated as occupied,production,back-to-back bookings
-BUG-02,2024-11-18,cancellation,A member could cancel another member's booking,Ownership check missing on a new endpoint,production,cancel by a non-owner
-BUG-03,2024-12-02,bookings,Booking a room that does not exist returned a server error,Room lookup not guarded,review,unknown room
-BUG-04,2024-12-16,availability,Free windows came out of order when bookings were created in reverse order,Sorting missing,production,availability with several bookings
-BUG-05,2025-01-06,bookings,A booking ending at 20:00 refused as outside opening hours,Closing time compared with the wrong operator,production,end exactly at closing time
-BUG-06,2025-01-20,permissions,Listing bookings returned cancelled bookings by default,Status filter missing,production,list after cancellation
-BUG-07,2025-01-27,bookings,A booking starting on a non-30-minute time was accepted,Grid rule not enforced on end time,review,end time off the grid
-BUG-08,2025-02-03,bookings,A booking of 4 hours 30 minutes was accepted,Maximum duration not enforced,review,duration just above the maximum
+BUG-01,2025-09-02,api,Rejected requests logged the full payload including pickup locations,Validation handler logged the request body,security review,log content of a rejected request
+BUG-02,2025-09-15,api,First requests after a restart took several seconds,Model loaded inside the request path,production,request without a model
+BUG-03,2025-09-29,pipeline,A retried ingestion doubled the training rows,No idempotency key on the source,production,ingestion retried twice
+BUG-04,2025-10-06,api,Traces did not show where injected latency was spent,Delay applied outside any span,demo rehearsal,span names during injected latency
+BUG-05,2025-10-13,pipeline,Champion alias moved before the reference data was stored,Promotion done before logging artifacts,review,order of promotion and artifact storage
+BUG-06,2025-10-20,alerting,Latency alert flapped after one missed scrape,Rate window too short for the scrape interval,production,alert rule windows
+BUG-07,2025-10-27,drift,Drift thresholds differed between the pipeline and the dashboard,Thresholds hard-coded in two places,review,thresholds read from configuration
+BUG-08,2025-11-03,api,Health returned 200 right after start while predictions failed with 503,Health did not check the model,production,health without a model

@@ -1,112 +1,125 @@
 # User stories
 
-Stories of the current backlog. Ids match `data/tabular_data/tickets.csv`. Criterion ids are written `AC-<story>-<n>`.
+Tickets of the current backlog. Ids match `data/tabular_data/tickets.csv`. Criterion ids are written `AC-<ticket>-<n>`. The expected behaviour behind each criterion is detailed in `docs/FUNCTIONAL_SPEC.md` of the platform repository (section given in brackets).
 
-## RB-101: Book a room
+## TX-101: Prediction input contract [§1.1]
 
-As a member, I want to book a free room for a time slot so that I have a place to meet.
+As an API client, I want invalid inputs to be rejected clearly so that I can fix my request.
 
-- AC-101-1: A member can book a free room with a start and an end on a 30-minute grid. The response is `201` with the booking.
-- AC-101-2: A booking lasts at least 30 minutes and at most 4 hours.
-- AC-101-3: A booking is inside opening hours, 08:00 to 20:00. A booking ending at 20:00 is allowed.
-- AC-101-4: A booking must start in the future.
+- AC-101-1: Values at the bounds of every field are accepted.
+- AC-101-2: A value just outside a bound, or of the wrong type, returns 422 and names the field.
+- AC-101-3: An empty body is valid: every field has a default.
+- AC-101-4: An invalid request returns 422 even when no model is loaded.
 
-## RB-102: No double booking
+## TX-102: Prediction responses [§1.2]
 
-As a member, I want a room never to be booked twice at the same time so that nobody finds their room taken.
+As an API client, I want a predictable answer in every situation.
 
-- AC-102-1: Two active bookings of the same room cannot overlap.
-- AC-102-2: A booking can start exactly when another one ends in the same room.
-- AC-102-3: Bookings in different rooms do not conflict.
+- AC-102-1: A valid request with a model loaded returns 200 and a predicted fare.
+- AC-102-2: Without a model the API returns 503 and never loads a model during the request.
+- AC-102-3: An error raised by the model returns 500.
+- AC-102-4: A successful prediction updates the prediction and revenue counters.
 
-## RB-103: Respect room capacity
+## TX-103: Request correlation and logs [§1.3]
 
-As a facility manager, I want bookings to respect the room capacity so that rooms are not overcrowded.
+As an on-call engineer, I want to follow one request across logs and traces.
 
-- AC-103-1: The number of attendees is at least 1 and at most the capacity of the room.
-- AC-103-2: A booking with exactly as many attendees as the capacity is accepted.
+- AC-103-1: The `X-Request-ID` sent by the client is returned unchanged.
+- AC-103-2: Without one, the API generates a 32-character hexadecimal id.
+- AC-103-3: Logs are JSON lines with the documented fields.
+- AC-103-4: Payload values never appear in logs.
 
-## RB-104: Cancel a booking
+## TX-104: Readiness [§1.5]
 
-As a member, I want to cancel my booking so that the room can be used by someone else.
+As an operator, I want `/health` to tell whether the service can really predict.
 
-- AC-104-1: A member can cancel their own booking up to 24 hours before its start.
-- AC-104-2: Within 24 hours of the start, a member cannot cancel.
-- AC-104-3: A cancelled booking keeps its record with status `cancelled`.
-- AC-104-4: Cancelling a booking that is already cancelled is refused.
+- AC-104-1: Without a model, `/health` returns 503.
+- AC-104-2: With a model that cannot predict, `/health` returns 503.
+- AC-104-3: With a working model, `/health` returns 200 with the version and a smoke fare.
 
-## RB-105: Release cancelled slots
+## TX-105: Delayed feedback [§1.6]
 
-As a member, I want a cancelled slot to be bookable again so that rooms are not wasted.
+As a data scientist, I want real fares to update the online error.
 
-- AC-105-1: After a cancellation, the same room and slot can be booked again.
-- AC-105-2: The availability of the room shows the released slot as free.
+- AC-105-1: Feedback bodies outside the documented bounds return 422.
+- AC-105-2: Only the last 10,000 predictions can receive feedback; the oldest is forgotten first.
+- AC-105-3: A prediction receives feedback once; unknown, expired or used ids return 404.
+- AC-105-4: Accepted feedback returns the error and updates the error counters.
 
-## RB-106: Manager privileges
+## TX-106: Fault injection and metric labels [§1.4, §1.7]
 
-As a manager, I want to manage bookings for the whole site.
+As an operator, I want fault injection to be safe and metrics to stay bounded.
 
-- AC-106-1: A manager can cancel any booking at any time.
-- AC-106-2: A manager can create a booking on behalf of a member.
-- AC-106-3: A member cannot create a booking on behalf of someone else.
+- AC-106-1: Fault injection is refused unless explicitly enabled.
+- AC-106-2: Injected latency appears in its own span.
+- AC-106-3: Unknown paths are labelled `unmatched` in metrics.
 
-## RB-107: Booking visibility
+## TX-107: Data preparation [§2.1]
 
-As a member, I want my bookings to be private so that my schedule is not exposed.
+As a data engineer, I want raw trips to become clean features.
 
-- AC-107-1: A member can read and list only their own bookings.
-- AC-107-2: A member reading another member's booking is refused.
-- AC-107-3: A manager can read and list all bookings.
+- AC-107-1: Source columns are renamed to the internal names.
+- AC-107-2: A missing required column fails with its name.
+- AC-107-3: `pickup_weekday` is 1 from Monday to Friday and 0 at the weekend.
+- AC-107-4: `total_fare` adds the optional components, counting absent ones as 0.
 
-## RB-108: Weekly recurring bookings
+## TX-108: Data validation and quarantine [§2.2, §2.3]
 
-As a member, I want to book the same slot for several weeks in one go.
+As a data engineer, I want bad rows set aside, never lost, and a broken source to stop the pipeline.
 
-- AC-108-1: A booking can be repeated weekly for 1 to 8 occurrences.
-- AC-108-2: All occurrences share the weekday, times, room and attendees.
-- AC-108-3: If one occurrence cannot be booked, no occurrence is created.
-- AC-108-4: More than 8 occurrences is refused.
+- AC-108-1: Rows outside the valid ranges are quarantined with a reason.
+- AC-108-2: Quarantined rows keep a readable reason.
+- AC-108-3: More than 20% invalid rows fails the preparation; exactly 20% passes.
+- AC-108-4: Fewer than 100 valid rows fails the preparation; exactly 100 passes.
+- AC-108-5: Ingesting the same source twice does not duplicate rows.
 
-## RB-109: Booking quota
+## TX-109: Drift detection [§3]
 
-As a facility manager, I want to limit how many future bookings a member holds so that rooms are shared fairly.
+As a data scientist, I want drift to be decided by documented thresholds.
 
-- AC-109-1: A member can hold at most 5 active future bookings.
-- AC-109-2: Each occurrence of a recurring booking counts toward the quota.
-- AC-109-3: Cancelled bookings do not count toward the quota.
-- AC-109-4: Managers have no quota.
+- AC-109-1: Two identical samples have a PSI of 0 and no drift.
+- AC-109-2: A feature drifts when PSI or KS reaches its threshold (threshold included).
+- AC-109-3: The dataset drifts when the share of drifted features reaches its threshold (threshold included).
+- AC-109-4: Thresholds come from the configuration file, not from the code.
 
-## RB-110: Reschedule a booking
+## TX-110: Training and promotion [§4]
 
-As a member, I want to move my booking instead of cancelling and rebooking.
+As a data scientist, I want a new model to replace the champion only when it is better.
 
-- AC-110-1: The owner can change start, end and attendees.
-- AC-110-2: The new values follow the same rules as a new booking.
-- AC-110-3: A booking does not conflict with itself when moved.
-- AC-110-4: A member must respect the 24-hour notice before the current start.
+- AC-110-1: Candidate and champion are scored on the same validation data.
+- AC-110-2: The candidate is promoted only if its error is strictly lower; a tie keeps the champion.
+- AC-110-3: The champion alias moves only after all artifacts are stored.
 
-## RB-111: Room availability
+## TX-111: Alert rules [§5]
 
-As a member, I want to see when a room is free on a given day.
+As an on-call engineer, I want alerts that fire for the right reason and tell me what to do.
 
-- AC-111-1: The availability lists the free windows inside opening hours, in order.
-- AC-111-2: Booked periods are not part of the free windows.
-- AC-111-3: Cancelled bookings do not reduce availability.
+- AC-111-1: Thresholds, durations and severities match the specification.
+- AC-111-2: During an outage of the API, only the root cause is notified.
+- AC-111-3: Every alert has a summary, a description, an action and a runbook link.
 
-## RB-112: Flexible cancellation for loyal members
+## TX-112: Supporting services [§6]
 
-As a loyal member, I want a more flexible cancellation policy.
+As an operator, I want the support services to be safe and bounded.
 
-- AC-112-1: Loyal members get better cancellation conditions.
+- AC-112-1: The alert receiver keeps at most 200 notifications, newest first.
+- AC-112-2: The controller can only stop or start the prediction API.
+- AC-112-3: The load simulator rejects settings outside their bounds.
 
-## RB-113: Limit bookings too far ahead
+## TX-113: Fast enough API
 
-As a facility manager, I do not want members to block rooms too far in advance.
+As a product owner, I want the API to be fast enough for our users.
 
-- AC-113-1: Bookings cannot be made too far in the future.
+- AC-113-1: The API responds fast enough.
 
-## RB-114: Deal with no-shows
+## TX-114: Retrain when data changes
 
-As a facility manager, I want to deal with members who book a room and do not use it.
+As a product owner, I want the model to be retrained when the data changes a lot.
 
-- AC-114-1: No-shows are handled.
+- AC-114-1: A significant data change triggers a retraining.
+
+## TX-115: Protect the admin endpoints
+
+As a security officer, I want the admin endpoints to be protected.
+
+- AC-115-1: Admin endpoints are protected.
