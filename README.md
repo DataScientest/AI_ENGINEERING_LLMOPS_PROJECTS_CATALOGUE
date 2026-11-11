@@ -10,7 +10,7 @@ The progression, deliverables and expected practices are described in the [unifi
 - [Regulatory Compliance](REGULATORY_COMPLIANCE/project_brief.md) — help auditors analyze a situation against a regulatory framework.
 - [Learner Pathways](LEARNER_PATHWAY/project_brief.md) — help build training pathways consistent with a profile and a goal.
 - [LocalMind](LOCAL_MIND/project_brief.md) — produce summaries of sensitive documents in a local environment.
-- [QA Assistant (beta)](QA_ASSISTANT/project_brief.md) — build an assistant that raises the test coverage and defect detection of a real ML platform.
+- [QA Assistant (beta)](QA_ASSISTANT/project_brief.md) — build an assistant that raises the test coverage and defect detection of a real ML training and serving platform.
 
 For your topic, start by reading the brief, exploring the data and mapping the business workflows presented. They describe the current work and its constraints; they do not prescribe a solution to build.
 

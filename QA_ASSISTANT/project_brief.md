@@ -4,9 +4,9 @@
 
 ## Business context
 
-TaxiFare predicts the fare of a New York taxi trip before it starts. The platform is real and runs locally: a prediction API, a training pipeline that validates data and detects drift, and a monitoring stack (metrics, logs, traces, alerts) of about fifteen containers.
+TaxiFare predicts the fare of a New York taxi trip before it starts. The platform is real and runs locally: a training pipeline that downloads real NYC trips, validates them, trains a model and promotes it in a model registry only when it beats the current one, and an API that serves the promoted model. It runs as about eight containers (PostgreSQL, MinIO, MLflow, Prefect, the API).
 
-The team has six developers and one QA engineer. Since the developers started using AI assistants to write code, they ship about twice as many changes. The QA engineer, the only person who designs tests, has become the bottleneck, and the test suite has fallen behind: 16% branch coverage, several modules without any test, incidents found in production rather than by the suite.
+The team has six developers and one QA engineer. Since the developers started using AI assistants to write code, they ship about twice as many changes. The QA engineer, the only person who designs tests, has become the bottleneck, and the test suite has fallen behind: 4 unit tests, 43% branch coverage, no integration test, incidents found in production rather than by the suite.
 
 The project aims to build an assistant that helps the QA engineer test the platform much better and much faster, at every level (unit, integration, end-to-end), without replacing their judgement on what is tested and what is merged.
 
@@ -30,8 +30,8 @@ The minimum below is what every team must deliver. It is a floor, not a target: 
 **Going further (examples, none is mandatory)**
 
 - Cover all tickets and every module, including those with no test today.
-- Generate integration tests with real dependencies (database, model registry, alert-rule tooling) started for the test.
-- Generate end-to-end tests on the full stack: traffic, metrics, alerts, notifications.
+- Generate integration tests with real dependencies (database, model registry, artifact storage) started for the test.
+- Generate end-to-end tests on the running platform: a training run that promotes a model, then the API serving it.
 - Choose the right level for each case (unit, integration, end-to-end) and justify it.
 - Measure the strength of your own tests (for example with mutation testing), not only their coverage.
 - Select the tests relevant to a change and run them in the CI, with a report on the pull request.
@@ -43,8 +43,7 @@ The following sources are provided. Selecting them and deciding their role in yo
 
 - **The platform** (system under test): repository [`DataScientest/AI_ENGINEERING_QA_ASSISTANT_TAXI_PLATFORM`](https://github.com/DataScientest/AI_ENGINEERING_QA_ASSISTANT_TAXI_PLATFORM), tag `v1.0`. Work on your own fork. It contains:
   - the code of every service and the existing test suite (`tests/`);
-  - `docs/FUNCTIONAL_SPEC.md`: the expected behaviour, which is the reference for every expected result;
-  - `docs/RUNBOOKS.md`: what each alert means and what to do.
+  - `docs/FUNCTIONAL_SPEC.md`: the expected behaviour, which is the reference for every expected result.
 - `data/source_documents/user_stories.md`: the backlog, with acceptance criteria and links to the specification.
 - `data/source_documents/team_context.md`: the team, how a change moves today, and constraints.
 - `data/tabular_data/tickets.csv`: the same tickets in tabular form.

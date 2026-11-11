@@ -2,124 +2,91 @@
 
 Tickets of the current backlog. Ids match `data/tabular_data/tickets.csv`. Criterion ids are written `AC-<ticket>-<n>`. The expected behaviour behind each criterion is detailed in `docs/FUNCTIONAL_SPEC.md` of the platform repository (section given in brackets).
 
-## TX-101: Prediction input contract [§1.1]
+## TX-101: Prediction input contract [§5.1, §5.2]
 
 As an API client, I want invalid inputs to be rejected clearly so that I can fix my request.
 
 - AC-101-1: Values at the bounds of every field are accepted.
-- AC-101-2: A value just outside a bound, or of the wrong type, returns 422 and names the field.
+- AC-101-2: A value outside a bound, or of the wrong type, returns 422 and names the faulty fields, sorted.
 - AC-101-3: An empty body is valid: every field has a default.
 - AC-101-4: An invalid request returns 422 even when no model is loaded.
+- AC-101-5: The API accepts exactly the ranges that the training data validation accepts.
 
-## TX-102: Prediction responses [§1.2]
+## TX-102: Prediction responses [§5.2]
 
 As an API client, I want a predictable answer in every situation.
 
-- AC-102-1: A valid request with a model loaded returns 200 and a predicted fare.
+- AC-102-1: A valid request returns the fare rounded to the cent and the model version, computed from the 9 model features.
 - AC-102-2: Without a model the API returns 503 and never loads a model during the request.
-- AC-102-3: An error raised by the model returns 500.
-- AC-102-4: A successful prediction updates the prediction and revenue counters.
+- AC-102-3: An error raised by the model returns 500 without exposing internal details.
+- AC-102-4: Logs name the faulty fields of a rejected request, never their values.
 
-## TX-103: Request correlation and logs [§1.3]
-
-As an on-call engineer, I want to follow one request across logs and traces.
-
-- AC-103-1: The `X-Request-ID` sent by the client is returned unchanged.
-- AC-103-2: Without one, the API generates a 32-character hexadecimal id.
-- AC-103-3: Logs are JSON lines with the documented fields.
-- AC-103-4: Payload values never appear in logs.
-
-## TX-104: Readiness [§1.5]
+## TX-103: Readiness [§5.3]
 
 As an operator, I want `/health` to tell whether the service can really predict.
 
-- AC-104-1: Without a model, `/health` returns 503.
-- AC-104-2: With a model that cannot predict, `/health` returns 503.
-- AC-104-3: With a working model, `/health` returns 200 with the version and a smoke fare.
+- AC-103-1: Without a model, `/health` returns 503.
+- AC-103-2: With a model that cannot predict, `/health` returns 503.
+- AC-103-3: With a working model, `/health` returns 200 with the version and a smoke fare.
 
-## TX-105: Delayed feedback [§1.6]
+## TX-104: Serving the champion [§5.4]
 
-As a data scientist, I want real fares to update the online error.
+As a data scientist, I want the API to serve the latest champion without a restart.
 
-- AC-105-1: Feedback bodies outside the documented bounds return 422.
-- AC-105-2: Only the last 10,000 predictions can receive feedback; the oldest is forgotten first.
-- AC-105-3: A prediction receives feedback once; unknown, expired or used ids return 404.
-- AC-105-4: Accepted feedback returns the error and updates the error counters.
+- AC-104-1: When no champion exists, nothing changes and the API keeps answering 503.
+- AC-104-2: A new champion version is loaded and its version is reported.
+- AC-104-3: The same version is not loaded twice.
 
-## TX-106: Fault injection and metric labels [§1.4, §1.7]
-
-As an operator, I want fault injection to be safe and metrics to stay bounded.
-
-- AC-106-1: Fault injection is refused unless explicitly enabled.
-- AC-106-2: Injected latency appears in its own span.
-- AC-106-3: Unknown paths are labelled `unmatched` in metrics.
-
-## TX-107: Data preparation [§2.1]
+## TX-105: Data preparation [§1]
 
 As a data engineer, I want raw trips to become clean features.
 
-- AC-107-1: Source columns are renamed to the internal names.
-- AC-107-2: A missing required column fails with its name.
-- AC-107-3: `pickup_weekday` is 1 from Monday to Friday and 0 at the weekend.
-- AC-107-4: `total_fare` adds the optional components, counting absent ones as 0.
+- AC-105-1: Source columns are renamed and the output has the 9 features then the target, in order.
+- AC-105-2: A missing required column fails and names every missing column.
+- AC-105-3: `pickup_weekday` is 1 from Monday to Friday and 0 at the weekend.
+- AC-105-4: `total_fare` adds the optional components, counting absent ones as 0.
 
-## TX-108: Data validation and quarantine [§2.2, §2.3]
+## TX-106: Data validation and quarantine [§2]
 
 As a data engineer, I want bad rows set aside, never lost, and a broken source to stop the pipeline.
 
-- AC-108-1: Rows outside the valid ranges are quarantined with a reason.
-- AC-108-2: Quarantined rows keep a readable reason.
-- AC-108-3: More than 20% invalid rows fails the preparation; exactly 20% passes.
-- AC-108-4: Fewer than 100 valid rows fails the preparation; exactly 100 passes.
-- AC-108-5: Ingesting the same source twice does not duplicate rows.
+- AC-106-1: Rows outside the valid ranges are quarantined with a reason naming the column.
+- AC-106-2: Missing, infinite and non-numeric values are quarantined.
+- AC-106-3: More than 20% invalid rows fails the preparation; exactly 20% passes.
+- AC-106-4: Fewer than 100 valid rows fails the preparation; exactly 100 passes.
+- AC-106-5: The limits come from the configuration file, not from the code.
 
-## TX-109: Drift detection [§3]
+## TX-107: Ingestion [§3]
 
-As a data scientist, I want drift to be decided by documented thresholds.
+As a data engineer, I want ingestion to be safe to retry.
 
-- AC-109-1: Two identical samples have a PSI of 0 and no drift.
-- AC-109-2: A feature drifts when PSI or KS reaches its threshold (threshold included).
-- AC-109-3: The dataset drifts when the share of drifted features reaches its threshold (threshold included).
-- AC-109-4: Thresholds come from the configuration file, not from the code.
+- AC-107-1: An invalid month or a limit under 100 fails before anything is downloaded.
+- AC-107-2: Ingesting the same source twice does not duplicate valid or quarantined rows.
+- AC-107-3: Quarantined rows are stored with their reason.
 
-## TX-110: Training and promotion [§4]
+## TX-108: Training and promotion [§4]
 
 As a data scientist, I want a new model to replace the champion only when it is better.
 
-- AC-110-1: Candidate and champion are scored on the same validation data.
-- AC-110-2: The candidate is promoted only if its error is strictly lower; a tie keeps the champion.
-- AC-110-3: The champion alias moves only after all artifacts are stored.
+- AC-108-1: Candidate and champion are scored on the same validation data.
+- AC-108-2: The candidate is promoted only if there is no champion or if its error is strictly lower; a tie keeps the champion.
+- AC-108-3: Every candidate is registered as a new version, promoted or not, with its metrics, parameters and training sample.
+- AC-108-4: The champion alias moves only after the model and its artifacts are stored.
 
-## TX-111: Alert rules [§5]
-
-As an on-call engineer, I want alerts that fire for the right reason and tell me what to do.
-
-- AC-111-1: Thresholds, durations and severities match the specification.
-- AC-111-2: During an outage of the API, only the root cause is notified.
-- AC-111-3: Every alert has a summary, a description, an action and a runbook link.
-
-## TX-112: Supporting services [§6]
-
-As an operator, I want the support services to be safe and bounded.
-
-- AC-112-1: The alert receiver keeps at most 200 notifications, newest first.
-- AC-112-2: The controller can only stop or start the prediction API.
-- AC-112-3: The load simulator rejects settings outside their bounds.
-
-## TX-113: Fast enough API
+## TX-109: Fast enough API
 
 As a product owner, I want the API to be fast enough for our users.
 
-- AC-113-1: The API responds fast enough.
+- AC-109-1: The API responds fast enough.
 
-## TX-114: Retrain when data changes
+## TX-110: Retrain when data changes
 
 As a product owner, I want the model to be retrained when the data changes a lot.
 
-- AC-114-1: A significant data change triggers a retraining.
+- AC-110-1: A significant data change triggers a retraining.
 
-## TX-115: Protect the admin endpoints
+## TX-111: Better model quality
 
-As a security officer, I want the admin endpoints to be protected.
+As a product owner, I want the predictions to be more accurate.
 
-- AC-115-1: Admin endpoints are protected.
+- AC-111-1: The model is more accurate than today.

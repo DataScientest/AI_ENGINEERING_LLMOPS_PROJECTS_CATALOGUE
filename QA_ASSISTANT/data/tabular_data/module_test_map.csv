@@ -1,15 +1,9 @@
 module,source_file,existing_tests,branch_coverage_v1_0
-prediction_api,services/prediction_api/app.py,tests/test_api.py (3 tests),69%
-pipeline_flow,services/pipeline/flow.py,tests/test_pipeline.py (1 test),32%
+prediction_api,services/prediction_api/app.py,tests/test_api.py (3 tests),60%
+pipeline_flow,services/pipeline/flow.py,tests/test_pipeline.py (1 test),40%
 pipeline_validation,services/pipeline/taxi_validation.py,indirect (via flow),67%
-drift,services/pipeline/taxi_drift.py,tests/test_drift_validation.py (2 tests),100%
-alert_rules,services/prometheus/alert_rules.yml,tests/test_alerts.py (1 test),not measured (YAML)
-alertmanager,services/alertmanager/alertmanager.yml,none,not measured (YAML)
-alert_webhook,services/alert_webhook/app.py,none,0%
-controller,services/controller/app.py,none,0%
-load_simulator,services/load_simulator/simulator.py,none,0%
-frontend,services/frontend/*.py,none,0%
-mlflow_init,services/mlflow/init_bucket.py,none,0%
+pipeline_config,services/pipeline/pipeline_config.py,indirect (via flow),100%
 pipeline_bootstrap,services/pipeline/bootstrap.py,none,0%
-end_to_end,full stack,tests/test_integration.py (2 tests; skipped without the stack),not measured
-all services,services/,10 unit tests + 2 end-to-end tests,16%
+mlflow_init,services/mlflow/init_bucket.py,none,0%
+end_to_end,running platform,tests/test_integration.py (2 tests; skipped when the platform is down),not measured
+all services,services/,4 unit tests + 2 end-to-end tests,43%
