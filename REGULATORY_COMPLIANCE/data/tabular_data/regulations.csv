@@ -1,0 +1,11 @@
+regulation_id,code,full_name,domain,effective_date,revision_date,scope,criticality,issuer
+REG-001,RGD-2024,Data Governance Regulation 2024,data_governance,2024-01-01,null,Any entity processing data of more than 500 people,HIGH,ACSI
+REG-002,DSI-2023,Information Systems Security Directive 2023,cybersecurity,2023-07-01,null,Critical-sector entities (healthcare energy finance),HIGH,ACSI
+REG-003,PCR-2022,Continuity and Resilience Protocol 2022,business_continuity,2022-01-01,2024-01-01,Entities > 250 employees,MEDIUM,ACSI
+REG-004,RGD-2022,Data Governance Regulation 2022,data_governance,2022-01-01,2024-01-01,Any entity processing data,MEDIUM,ACSI
+REG-005,TRA-2023,Traceability and Audit Regulation 2023,audit,2023-01-01,null,Entities under ACSI oversight,MEDIUM,ACSI
+REG-006,CLOUD-2024,Cloud and Outsourcing Directive 2024,cloud,2024-06-01,null,Entities outsourcing critical data,HIGH,ACSI
+REG-007,AI-2024,Professional-Use AI Systems Regulation 2024,ai_governance,2024-09-01,null,Entities deploying AI systems,HIGH,ACSI
+REG-008,DPO-2023,Data Protection Officer Circular 2023,data_protection,2023-03-01,null,Entities subject to the RGD,LOW,ACSI
+REG-009,INC-2022,Incident Notification Protocol 2022,incident_management,2022-06-01,null,All entities under ACSI oversight,MEDIUM,ACSI
+REG-010,RET-2023,Retention and Archiving Regulation 2023,data_retention,2023-09-01,null,Any entity archiving data,LOW,ACSI

@@ -1,42 +1,42 @@
-# Catalogue de projets LLMOps
+# LLMOps Project Catalogue
 
-Ce répertoire est le paquet apprenant du catalogue : il propose quatre contextes métier pour construire un projet d'AI Engineering. Il fournit le point de départ : une fiche projet et des données. La manière de concevoir la solution appartient à chaque équipe.
+This directory is the learner package for the catalogue: it offers four business contexts for building an AI Engineering project. It provides the starting point: a project brief and data. How to design the solution is up to each team.
 
-La progression, les livrables et les pratiques attendues sont décrits dans la [méthodologie unifiée AI Engineering](../AI_engineering_project_message/README.md).
+The progression, deliverables and expected practices are described in the [unified AI Engineering methodology](../AI_engineering_project_message/README.md).
 
-## Choisir un sujet
+## Choosing a topic
 
-- [Support Produit](SUPPORT_PRODUIT/fiche_projet.md) — assister une équipe support dans la résolution de tickets sur un produit SaaS.
-- [Conformité Réglementaire](CONFORMITE_REGLEMENTAIRE/fiche_projet.md) — aider des auditeurs à analyser une situation au regard d'un cadre réglementaire.
-- [Parcours Apprenant](PARCOURS_APPRENANT/fiche_projet.md) — aider à construire des parcours de formation cohérents avec un profil et un objectif.
-- [LocalMind](LOCAL_MIND/fiche_projet.md) — produire des synthèses de documents sensibles dans un environnement local.
+- [Product Support](PRODUCT_SUPPORT/project_brief.md) — assist a support team in resolving tickets on a SaaS product.
+- [Regulatory Compliance](REGULATORY_COMPLIANCE/project_brief.md) — help auditors analyze a situation against a regulatory framework.
+- [Learner Pathways](LEARNER_PATHWAY/project_brief.md) — help build training pathways consistent with a profile and a goal.
+- [LocalMind](LOCAL_MIND/project_brief.md) — produce summaries of sensitive documents in a local environment.
 
-Pour votre sujet, commencez par lire la fiche, explorer les données et cartographier les workflows métier présentés. Ils décrivent le travail actuel et ses contraintes ; ils ne prescrivent pas une solution à construire.
+For your topic, start by reading the brief, exploring the data and mapping the business workflows presented. They describe the current work and its constraints; they do not prescribe a solution to build.
 
-## Ressources destinées aux apprenants
+## Resources for learners
 
-Chaque dossier de projet contient une `fiche_projet.md` et un dossier `donnees/`. Les données sont classées par nature :
+Each project folder contains a `project_brief.md` and a `data/` folder. The data is organized by nature:
 
-- `sources_documentaires/` : documents, procédures, notes ou références métier ;
-- `donnees_tabulaire/` : registres, catalogues, historiques et autres données structurées ;
-- `jeux_evaluation/` : cas et références utilisables pour préparer un protocole d'évaluation ;
-- `exemples_prompts/` : exemples de formulations, présents uniquement pour LocalMind.
+- `source_documents/`: business documents, procedures, notes or references;
+- `tabular_data/`: registers, catalogues, histories and other structured data;
+- `evaluation_sets/`: cases and references you can use to prepare an evaluation protocol;
+- `example_prompts/`: examples of prompt wordings, provided only for LocalMind.
 
-Le choix des moyens de stockage, des accès, des transformations et de la démarche d'évaluation relève de l'équipe. Il doit être cohérent avec le cas d'usage retenu, les données, les risques et les contraintes métier.
+The choice of storage, access, transformations and evaluation approach is up to the team. It must be consistent with the chosen use case, the data, the risks and the business constraints.
 
-Les ressources d’évaluation sont distribuées séparément à l’équipe pédagogique ; elles ne font pas partie de ce paquet apprenant.
+The evaluation resources are distributed separately to the teaching team; they are not part of this learner package.
 
-## Responsabilités de l'équipe
+## Team responsibilities
 
-En suivant la méthodologie, chaque équipe doit notamment :
+By following the methodology, each team must in particular:
 
-- cadrer un problème et un MVP vérifiable à partir du flux métier ;
-- établir une baseline et décider où une assistance ou une automatisation apporte réellement de la valeur ;
-- documenter les décisions structurantes dans des ADR ;
-- produire, à chaque phase du projet, les preuves attendues de qualité, de test, de traçabilité, de sécurité, d'évaluation et d'exploitation.
+- frame a problem and a verifiable MVP based on the business flow;
+- establish a baseline and decide where assistance or automation really brings value;
+- document key decisions in ADRs;
+- produce, at each phase of the project, the expected evidence of quality, testing, traceability, security, evaluation and operations.
 
-Les choix doivent être justifiés. L'objectif est de démontrer une solution utile, maîtrisée et maintenable, plutôt que d'adopter une technologie particulière.
+Choices must be justified. The goal is to demonstrate a useful, well-controlled and maintainable solution, rather than to adopt a particular technology.
 
-## Contraintes communes
+## Common constraints
 
-Les réalisations reposent sur des composants open source. Lorsqu'un sujet l'exige, l'équipe doit pouvoir reproduire l'exécution dans un environnement local. La solution doit aussi assurer une traçabilité suffisante des décisions et des exécutions, et reposer sur une démarche d'évaluation explicite.
+Implementations rely on open-source components. When a topic requires it, the team must be able to reproduce the execution in a local environment. The solution must also provide sufficient traceability of decisions and executions, and rely on an explicit evaluation approach.

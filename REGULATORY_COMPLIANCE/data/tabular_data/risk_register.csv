@@ -1,0 +1,11 @@
+risk_id,entity_id,risk_category,risk_description,likelihood,impact,mitigation_measures,status,last_review_date
+RSK-001,ENT-001,regulatory,Failure to meet incident notification deadlines,LOW,MEDIUM,"Automated detection and notification procedure",active,2024-01-15
+RSK-002,ENT-005,operational,Loss of continuity following a major disaster,HIGH,HIGH,"New fallback site being qualified",active,2024-02-01
+RSK-003,ENT-005,technical,IS vulnerability not detected by pentest,MEDIUM,HIGH,"Mandatory annual external audit",active,2024-02-01
+RSK-004,ENT-009,compliance,Excessive retention of customer data,HIGH,MEDIUM,"Automatic purge project",active,2024-03-01
+RSK-005,ENT-009,operational,RTO non-compliant with requirements,MEDIUM,CRITICAL,"Fallback architecture review",active,2024-01-15
+RSK-006,ENT-013,technical,Insufficient network segmentation,HIGH,CRITICAL,"Network overhaul project",active,2023-12-10
+RSK-007,ENT-015,regulatory,AI deployment without compliance with Art.7 REG-007,MEDIUM,HIGH,"Bias and human oversight audit",active,2024-03-15
+RSK-008,ENT-020,compliance,Non-compliant cloud outsourcing,MEDIUM,HIGH,"Contract renegotiation",active,2024-03-10
+RSK-009,ENT-017,operational,No fallback site for critical systems,HIGH,CRITICAL,"Secondary hosting contract signed",in_progress,2024-02-20
+RSK-010,ENT-010,technical,Data not encrypted at rest,HIGH,HIGH,"Encryption project in progress",active,2024-02-15

@@ -1,0 +1,16 @@
+Minutes — Meridian Suite Product Meeting
+Date: June 12, 2025
+Attendees: product management, engineering, support, marketing
+
+Agenda: version 4.2 review, Q3 backlog prioritization, June 5 incident.
+
+1. Version 4.2 review
+Version 4.2 is deployed at 78% of customers. The real-time reporting module is the most used feature (61% adoption at 30 days). Two regressions were reported: slow large exports (beyond 50,000 rows) and loss of the default filter after logout. Fixes are planned for 4.2.3, expected at the end of June.
+
+2. Q3 prioritization
+Three workstreams selected: rebuild of the internal search engine (support's top request), SAML SSO connector for enterprise accounts, and performance audit of the public API. The "mobile application" workstream is postponed to Q4 for lack of front-end resources. Support asks that a priority escalation channel be kept during the search rebuild.
+
+3. June 5 incident
+47 minutes of downtime in the EU region caused by saturation of the database cluster during a migration campaign. The post-mortem identifies two causes: no rate limit on the migration script and a saturation alert configured with a threshold that was too high. Actions decided: mandatory rate limit on all migration scripts, quarterly review of alert thresholds, customer communication within 30 minutes in case of a major incident.
+
+Next meeting: July 10, 2025.

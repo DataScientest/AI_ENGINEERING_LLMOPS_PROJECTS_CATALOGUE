@@ -1,0 +1,21 @@
+training_id,prerequisite_skill,required_level,is_mandatory,note
+TR-003,python_basics,intermediate,true,"numpy/pandas usage required"
+TR-003,statistics_basics,beginner,false,"Recommended to understand the metrics"
+TR-004,ml_concepts,intermediate,true,"Must know gradient descent"
+TR-004,pytorch,beginner,false,"Or TensorFlow equivalent"
+TR-005,docker,intermediate,true,"Docker Compose required"
+TR-005,python_basics,intermediate,true,"Python scripting for pipelines"
+TR-006,mlflow,intermediate,true,"TR-005 or real MLflow experience"
+TR-006,docker,advanced,true,"Kubernetes basics appreciated"
+TR-007,sql_basics,beginner,false,"To understand RDS"
+TR-009,docker,intermediate,true,"Understanding of containers"
+TR-010,python_basics,intermediate,true,"For the exercise notebooks"
+TR-010,sql_basics,beginner,false,"For the RAG examples on databases"
+TR-011,llm_concepts,intermediate,true,"TR-010 or LLM experience"
+TR-011,docker,intermediate,true,"Deployment in the course"
+TR-012,python_basics,intermediate,true,
+TR-012,sql_advanced,intermediate,true,"Understand Spark optimizations"
+TR-015,ml_concepts,beginner,true,
+TR-016,python_basics,intermediate,true,
+TR-018,python_basics,intermediate,true,"DAGs in Python"
+TR-020,architecture_data,intermediate,true,"Strict prerequisite — capstone course"

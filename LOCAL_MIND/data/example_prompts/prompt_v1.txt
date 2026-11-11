@@ -1,0 +1,6 @@
+Summarize the following document in English.
+
+Document:
+{document}
+
+Summary:

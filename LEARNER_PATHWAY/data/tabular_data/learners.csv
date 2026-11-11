@@ -1,0 +1,21 @@
+learner_id,name,current_role,years_experience,current_skills,learning_goal,availability_hours_week,completed_trainings,target_certification
+LRN-001,Alice Morin,Python Developer,3,"python_basics,git_advanced,sql_basics,docker","Become a Data Engineer",6,TR-019,CERT-003
+LRN-002,Bruno Kastler,BI Analyst,5,"sql_advanced,powerbi,excel_advanced,tableau","Move into Data Scientist",8,,CERT-002
+LRN-003,Camille Dubois,Junior Data Scientist,2,"python_basics,ml_concepts,sklearn,statistics_basics,pandas","Master MLOps",10,TR-003|TR-001,CERT-004
+LRN-004,David Ng,DevOps Engineer,7,"docker,kubernetes,ci_cd_basics,bash_scripting,git_advanced","MLOps specialization",12,TR-019,CERT-004
+LRN-005,Emma Lefebvre,AI Master's Student,0,"python_basics,ml_concepts,statistics_basics","Land a first Data Scientist job",15,,CERT-002
+LRN-006,Francois Picard,Oracle DBA,12,"sql_advanced,query_optimization,oracle_admin","Transition to modern Data Engineering",4,TR-002,CERT-003
+LRN-007,Grace Azoulay,ML Engineer,4,"python_basics,sklearn,pytorch,ml_concepts,model_evaluation,docker","Master LLM/RAG in production",10,TR-003|TR-004,CERT-005
+LRN-008,Hugo Bernard,IT Project Manager,9,"excel_advanced,sql_basics,powerbi","Understand Data to manage better",4,,
+LRN-009,Ines Roux,Data Analyst,3,"sql_advanced,python_basics,tableau,statistics_basics","Become a Data Scientist",8,,CERT-002
+LRN-010,Jules Martin,Java Developer,6,"java,git_advanced,docker,sql_basics","Career change into Data Engineering",6,TR-019,CERT-003
+LRN-011,Karine Tessier,IS Architect,15,"aws_core,architecture_data,docker,kubernetes","Specialize in Data Architecture",4,TR-007,CERT-006
+LRN-012,Lucas Fontaine,Senior Data Scientist,6,"python_basics,ml_concepts,sklearn,pytorch,feature_engineering,sql_advanced,pandas","Lead an MLOps team",8,TR-003|TR-004|TR-005|TR-015,CERT-004
+LRN-013,Marie Chevalier,HR Analytics,4,"excel_advanced,powerbi,sql_basics","Automate analyses with Python",6,,
+LRN-014,Nicolas Gros,BI Consultant,8,"sql_advanced,tableau,powerbi,excel_advanced,statistics_basics","Move into Data Science",6,TR-002|TR-013,CERT-002
+LRN-015,Olivia Schneider,Software Engineer,5,"python_basics,docker,git_advanced,ci_cd_basics","Become an LLM Engineer",10,TR-019,CERT-005
+LRN-016,Pierre Muller,Data Engineer,4,"python_basics,spark,sql_advanced,airflow,delta_lake,pandas","Master the GCP cloud",8,TR-012|TR-018,CERT-007
+LRN-017,Quentin Saidi,Computer Science Bachelor's Student,0,"python_basics,git_advanced","Join a Data Master's program or bootcamp",20,,
+LRN-018,Rachel Vidal,Actuaire,10,"statistics_basics,r_basics,sql_basics,excel_advanced","Learn Python and ML",6,,CERT-002
+LRN-019,Samuel Cohen,NLP Researcher,5,"python_basics,nlp_basics,huggingface,pytorch,transformers","Move from research to LLMOps production",12,TR-004|TR-016,CERT-005
+LRN-020,Theo Lambert,Data Engineer,3,"python_basics,sql_advanced,airflow,docker","End-to-end Data Architecture",8,TR-001|TR-002|TR-018,CERT-006

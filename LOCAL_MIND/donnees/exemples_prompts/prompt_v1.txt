@@ -1,6 +1,0 @@
-Résume le document suivant en français.
-
-Document :
-{document}
-
-Résumé :

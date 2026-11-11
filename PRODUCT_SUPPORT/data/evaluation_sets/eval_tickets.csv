@@ -1,0 +1,9 @@
+eval_id,ticket_description,expected_category,expected_known_issue,expected_response_contains,notes
+EVAL-001,"ImportError cannot import name DataConnector from nexus.core on Python 3.10",bug,KI-007,"nexus.connectors,DataConnector,3.1.1","Known issue detection test"
+EVAL-002,"How do I configure webhooks to listen to task_completed events?",question,null,"webhook,payload,task_completed,documentation","Question vs bug routing test"
+EVAL-003,"Timeout on a 25,000-row export via the API",performance,KI-003,"async,polling,/export/async","Known performance issue test"
+EVAL-004,"SSO login rejected with Okta, invalid_audience error",integration,KI-005,"Entity ID,nexus://prod,SAML","Known auth issue test"
+EVAL-005,"Blank page after login on Chrome, no error in the server logs",bug,KI-009,"cache,localStorage,session","Known frontend issue test"
+EVAL-006,"403 error on POST /api/v3/admin/users with an admin token",bug,null,"permissions,token,admin","Unknown issue test - not in known_issues"
+EVAL-007,"Custom fields are lost when I refresh the page",bug,KI-014,"autosave,Settings,Forms","Known forms issue test"
+EVAL-008,"Which Python versions are supported by the SDK?",question,KI-002,"3.10,3.11,Python 3.12","Question test with an associated known issue"

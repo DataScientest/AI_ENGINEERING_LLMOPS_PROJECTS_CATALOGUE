@@ -1,0 +1,14 @@
+issue_id,affected_versions,component,title,symptoms,workaround,fixed_in_version,severity
+KI-001,2.3.5|2.4.0|2.4.2,export,CSV export UTF-8 encoding,"Accented characters corrupted in CSV exports","Use the ?encoding=utf-8-sig option in the export URL",3.0.0,LOW
+KI-002,2.3.5|2.4.0|2.4.2,sdk,Python 3.12 incompatibility,"AttributeError on deprecated asyncio.coroutine","Stay on Python 3.10 or 3.11 until the fix is released",3.1.0,HIGH
+KI-003,2.4.0|2.4.2,api,Export timeout on large datasets,"Timeout on exports > 10k rows via /api/v2/export","Use the asynchronous export /api/v2/export/async with polling",3.0.0,MEDIUM
+KI-005,2.4.0|2.4.2|3.0.0,auth,SSO SAML audience mismatch,"invalid_audience during Okta/Azure AD SSO login","Update the Entity ID in the SAML config to nexus://prod",3.1.0,HIGH
+KI-006,3.0.0|3.0.1,auth,TOTP clock drift,"2FA code rejected even though it is correct","Synchronize the server clock (ntpdate) — tolerance reduced to ±15s in 3.0",3.1.0,HIGH
+KI-007,3.0.0|3.1.0,core,ImportError DataConnector,"ImportError: cannot import name 'DataConnector' from 'nexus.core'","Remplacer par 'from nexus.connectors import DataConnector' (refactoring v3)",3.1.1,HIGH
+KI-008,3.0.0|3.1.0,notifications,Alert emails not sent,"Alerts configured but emails not received","Check SMTP_TLS=true in .env — behavior change in v3",3.1.1,LOW
+KI-009,3.0.0,frontend,Blank dashboard after login,"TypeError: undefined is not a function en console JS","Clear the browser cache and localStorage — session migration issue",3.0.1,HIGH
+KI-011,3.0.0,migration,v2→v3 migration fails at step 3/7,"AlembicError: relation 'projects_v2' does not exist","Run 'nexus db cleanup-legacy' before the migration",3.0.1,CRITICAL
+KI-013,3.1.0,api,Cursor pagination looping,"The pagination cursor returns the same results after page 2","Use offset+limit until the fix is released, or upgrade to v3.1.1",3.1.1,MEDIUM
+KI-014,3.1.0,forms,Form custom fields lost,"Custom fields lost after F5 without saving","Enable autosave in Settings > Forms > AutosaveInterval",3.1.1,MEDIUM
+KI-015,3.1.0,backup,Nightly backup failing since 3.1.0,"connection refused :5433 in the backup logs","Set DB_BACKUP_PORT=5432 in .env (3.1.0 regression)",3.1.1,CRITICAL
+KI-016,3.0.0|3.1.0,webhooks,Duplicate webhook events,"Events sent 2-3x for a single event","Enable deduplication: WEBHOOK_DEDUP=true in .env",3.1.1,MEDIUM

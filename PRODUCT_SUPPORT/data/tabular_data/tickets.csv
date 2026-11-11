@@ -1,0 +1,21 @@
+ticket_id,date,client_id,product_version,title,description,severity,status,category,resolution_id
+TK-001,2024-01-08,CLI-003,3.1.0,ImportError at startup,"Unable to start the service, ImportError: cannot import name 'DataConnector' from 'nexus.core'",HIGH,resolved,bug,KI-007
+TK-002,2024-01-10,CLI-011,2.4.2,Timeout API export,"Exports via /api/v2/export exceed the 30s timeout for datasets > 10k rows",MEDIUM,resolved,performance,KI-003
+TK-003,2024-01-12,CLI-007,3.0.0,Dashboard does not load,"Blank dashboard page after login, JS console: TypeError undefined is not a function",HIGH,resolved,bug,KI-009
+TK-004,2024-01-15,CLI-002,2.4.2,Question about webhooks,"How do I configure a webhook for task_completed events?",LOW,resolved,question,null
+TK-005,2024-01-18,CLI-015,3.1.0,403 error on admin endpoint,"POST /api/v3/admin/users returns 403 even with a valid admin token",HIGH,open,bug,null
+TK-006,2024-01-20,CLI-008,3.0.0,v2 to v3 migration blocked,"Migration script fails at step 3/7 : AlembicError relation 'projects_v2' does not exist",CRITICAL,resolved,migration,KI-011
+TK-007,2024-01-22,CLI-001,2.4.2,Okta SSO integration,"SAML assertion rejected during SSO login, error: invalid_audience",HIGH,resolved,integration,KI-005
+TK-008,2024-01-25,CLI-014,3.1.0,API rate limit reached,"429 error on /api/v3/tasks in production, even though we do not exceed 100 req/min",MEDIUM,open,api,null
+TK-009,2024-01-28,CLI-006,3.1.0,Form data loss,"A form's custom fields are lost after a refresh if not saved",MEDIUM,resolved,bug,KI-014
+TK-010,2024-02-01,CLI-009,2.4.2,Python 3.12 compatibility,"The Python SDK raises AttributeError on Python 3.12, only compatible with 3.8-3.11",HIGH,resolved,compatibility,KI-002
+TK-011,2024-02-03,CLI-004,3.1.0,Automatic backup fails,"Nightly backup job fails since the 3.1.0 update, logs: connection refused :5433",CRITICAL,resolved,bug,KI-015
+TK-012,2024-02-05,CLI-012,3.0.0,Slow query performance,"Queries on the Reporting module take 8-15s instead of <2s for the past 2 weeks",MEDIUM,open,performance,null
+TK-013,2024-02-08,CLI-003,3.1.0,Email notification not received,"Configured email alerts are not sent, no error visible in the logs",LOW,resolved,configuration,KI-008
+TK-014,2024-02-10,CLI-010,3.1.0,Incorrect collaborator permissions,"A collaborator with the Viewer role can modify resources, permissions issue",CRITICAL,open,security,null
+TK-015,2024-02-12,CLI-005,2.4.2,CSV export encoding,"Special characters (é à ü) incorrectly encoded in CSV exports, file unusable",LOW,resolved,bug,KI-001
+TK-016,2024-02-15,CLI-013,3.1.0,Faulty API pagination,"The cursor pagination parameter always returns the same results after page 2",MEDIUM,resolved,api,KI-013
+TK-017,2024-02-18,CLI-007,3.1.0,Analytics module crash,"Analytics module crashes with MemoryError on datasets > 50k rows",HIGH,open,performance,null
+TK-018,2024-02-20,CLI-002,3.0.0,2FA authentication blocked,"TOTP code rejected although correct, clock drift suspected",HIGH,resolved,auth,KI-006
+TK-019,2024-02-22,CLI-015,3.1.0,Webhook duplicate events,"Webhook events sent 2 to 3 times for a single event",MEDIUM,resolved,bug,KI-016
+TK-020,2024-02-25,CLI-011,3.1.0,Enterprise plan question,"Which features are included in the Enterprise plan vs Business?",LOW,resolved,question,null

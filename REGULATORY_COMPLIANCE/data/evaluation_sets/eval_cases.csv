@@ -1,0 +1,7 @@
+eval_id,document_excerpt,applicable_regulation,expected_nc_articles,expected_severity,notes
+EVAL-C1,"Our company retains customer data for 10 years for commercial reasons. We have no appointed DPO but process the data of 800 customers.",REG-001,Art.12|Art.18,HIGH,"Multi-NC detection test: retention period + no DPO"
+EVAL-C2,"The last penetration test of our IS was 26 months ago. Our incident response plan was written in 2021 and has not been tested.",REG-002,Art.7|Art.11,CRITICAL,"Cybersecurity NC test"
+EVAL-C3,"We use an automatic scoring algorithm to grant credit. Decisions are fully automated with no human review.",REG-007,Art.6|Art.8,CRITICAL,"AI NC test - two distinct articles"
+EVAL-C4,"Our contract with our US cloud provider does not explicitly mention server location. The data is replicated across 3 regions.",REG-006,Art.5,HIGH,"Cloud NC test - data location"
+EVAL-C5,"We have a continuity plan validated in 2022. Our RTO is 48h. We have 1200 employees.",REG-003,Art.2,CRITICAL,"Continuity NC test - RTO insufficient for entity size"
+EVAL-C6,"Our personal data access logs are kept for 6 months. We had a minor security incident last month, notified to the ACSI within 72h.",REG-005|REG-009,Art.3|Art.5,MEDIUM,"Multi-regulation test, borderline incident notification"
