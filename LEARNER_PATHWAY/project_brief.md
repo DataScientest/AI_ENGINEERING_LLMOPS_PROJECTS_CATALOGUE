@@ -63,7 +63,7 @@ Explicitly justify why a **simple LLM treatment (chat)**, a **Workflow**, a **RA
 
 ## Getting started
 
-Start with the [unified AI Engineering methodology](../../AI_engineering_project_message/README.md). It guides you from scoping to operations and recalls the expected software engineering best practices.
+The progression, deliverables and expected practices are described in the `AI Engineers - Project (EN)` module on the learn platform.
 
 Document your important decisions in ADRs and keep the evidence requested at each phase: contract, baseline, tests, evaluation results, traces, and demonstrations of working or controlled-failure behavior.
 
