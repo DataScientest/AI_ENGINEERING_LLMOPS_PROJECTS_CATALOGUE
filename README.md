@@ -2,7 +2,7 @@
 
 Ce répertoire est le paquet apprenant du catalogue : il propose quatre contextes métier, plus un sujet bêta, pour construire un projet d'AI Engineering. Il fournit le point de départ : une fiche projet et des données. La manière de concevoir la solution appartient à chaque équipe.
 
-La progression, les livrables et les pratiques attendues sont décrits dans la [méthodologie unifiée AI Engineering](../AI_engineering_project_message/README.md).
+La progression, les livrables et les pratiques attendues sont décrits dans le module Module: `Méthodologie Projet AI Eng (FR)` sur la plateforme Learn.
 
 ## Choisir un sujet
 
