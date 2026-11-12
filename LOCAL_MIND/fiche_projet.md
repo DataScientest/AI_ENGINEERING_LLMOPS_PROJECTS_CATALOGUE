@@ -60,7 +60,7 @@ Justifiez explicitement pourquoi un **traitement LLM simple (chat)**, un **Workf
 
 ## Démarrer
 
-Commencez par la [méthodologie unifiée AI Engineering](../../AI_engineering_project_message/README.md). Elle vous guide du cadrage à l'exploitation et rappelle les bonnes pratiques de software engineering attendues.
+La progression, les livrables et les pratiques attendues sont décrits dans le module `Méthodologie Projet AI Eng (FR)` sur la plateforme Learn.
 
 Documentez vos décisions importantes dans des ADR et conservez les preuves demandées à chaque phase : contrat, baseline, tests, résultats d'évaluation, traces et démonstrations de fonctionnement ou d'échec maîtrisé.
 
