@@ -2,7 +2,7 @@
 
 This directory is the learner package for the catalogue: it offers four business contexts, plus one beta subject, for building an AI Engineering project. It provides the starting point: a project brief and data. How to design the solution is up to each team.
 
-The progression, deliverables and expected practices are described in the [unified AI Engineering methodology](../AI_engineering_project_message/README.md).
+The progression, deliverables and expected practices are described in the `AI Engineers - Project (EN)` module on the learn platform.
 
 ## Choosing a topic
 
